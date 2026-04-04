@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="accueil.css">
+    <title>Tournoi Pokémon</title>
+  </head>
+  <body>
+    <h1>Tournoi Pokémon</h1>
+
+    <div id="container-accueil">
+
+      <div class="carte-joueur" id="carte-j1">
+        <h2>Joueur 1</h2>
+        <div id="equipe-j1" class="apercu-equipe"></div>
+        <button onclick="choisirEquipe(1)">⚔️ Choisir mon équipe</button>
+      </div>
+
+      <div id="vs">VS</div>
+
+      <div class="carte-joueur" id="carte-j2">
+        <h2>Joueur 2</h2>
+        <div id="equipe-j2" class="apercu-equipe"></div>
+        <button onclick="choisirEquipe(2)">⚔️ Choisir mon équipe</button>
+      </div>
+
+    </div>
+
+    <button id="btn-multi" onclick="window.location.href='multijoueur.html'">🌐 Jouer en ligne</button>
+
+    <script src="accueil.js"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Tournoi Pokémon</title>
+  </head>
+  <body>
+    <h1>Tournoi Pokémon</h1>
+    <div id="recherche">
+  <input type="text" id="input-recherche" placeholder="Rechercher un Pokémon...">
+</div>
+    <div id="navigation">
+  <button id="btn-precedent">◀ Précédent</button>
+  <span id="info-page">Page 1</span>
+  <button id="btn-suivant">Suivant ▶</button>
+</div>
+<div id="liste-pokemon"></div>
+    <div id="equipe">
+  <h2>Mon équipe</h2>
+  <div id="slots"></div>
+</div>
+<div id="panneau-perso" class="cache">
+  <div id="contenu-perso">
+    <h2 id="titre-perso">Personnaliser</h2>
+    <div id="attaques-choisies">
+      <h3>Attaques choisies :</h3>
+      <div id="liste-attaques-choisies"></div>
+    </div>
+    <div id="section-ivev">
+  <h3>IVs et EVs :</h3>
+  <div id="tableau-ivev"></div>
+  <p id="total-ev">EVs utilisés : 0 / 510</p>
+</div>
+    <div id="selection-objet">
+  <h3>Objet tenu :</h3>
+  <div id="liste-objets"></div>
+</div>
+    <div id="attaques-disponibles">
+      <h3>Attaques disponibles :</h3>
+      <input type="text" id="recherche-attaque" placeholder="Rechercher une attaque...">
+      <div id="liste-attaques-disponibles"></div>
+    </div>
+    <button onclick="fermerPanneau()">✅ Confirmer</button>
+  </div>
+</div>
+<script src="objets.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+<button id="btn-combat" onclick="lancerCombat()">⚔️ Commencer le combat !</button>

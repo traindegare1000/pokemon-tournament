@@ -1,0 +1,88 @@
+#arene {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 30px;
+  background-color: #16213e;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 15px;
+  border: 2px solid #ffcb05;
+}
+
+.zone-joueur {
+  text-align: center;
+  width: 300px;
+}
+
+.zone-joueur h2 {
+  color: #ffcb05;
+  margin-bottom: 10px;
+}
+
+.zone-joueur img {
+  width: 120px;
+  height: 120px;
+  image-rendering: pixelated;
+}
+
+.barre-pv {
+  background-color: #333;
+  border-radius: 10px;
+  height: 15px;
+  width: 100%;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.pv-fill {
+  height: 100%;
+  width: 100%;
+  background-color: #4CAF50;
+  border-radius: 10px;
+  transition: width 0.5s;
+}
+
+#log-combat {
+  background-color: #16213e;
+  border: 2px solid #ffcb05;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 800px;
+  min-height: 80px;
+  font-size: 16px;
+}
+#zone-attaques {
+  max-width: 800px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+#zone-attaques h3 {
+  color: #ffcb05;
+  margin-bottom: 10px;
+}
+
+#boutons-attaques {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-attaque {
+  background-color: #16213e;
+  border: 2px solid #ffcb05;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.btn-attaque:hover {
+  background-color: #ffcb05;
+  color: black;
+}

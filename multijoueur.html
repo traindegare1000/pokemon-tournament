@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="accueil.css">
+    <title>Multijoueur Pokémon</title>
+  </head>
+  <body>
+    <h1>Tournoi Pokémon</h1>
+
+    <div id="container-accueil">
+
+      <div class="carte-joueur">
+        <h2>🌐 Multijoueur en ligne</h2>
+
+        <div id="section-creer">
+          <h3>Créer une partie</h3>
+          <p>Choisis ton équipe et crée une salle — ton ami rejoindra avec le code.</p>
+          <button onclick="allerChoisirEquipe('creer')">⚔️ Choisir mon équipe</button>
+          <div id="zone-code" class="cache">
+            <p>Ton code de salle :</p>
+            <h2 id="code-salle" style="color:#ffcb05; font-size:40px; letter-spacing:5px;">----</h2>
+            <p style="color:gray; font-size:12px;">Donne ce code à ton ami !</p>
+            <p id="statut-attente" style="color:gray;">En attente de l'adversaire...</p>
+          </div>
+        </div>
+
+        <hr style="border-color:#ffcb05; margin:20px 0;">
+
+        <div id="section-rejoindre">
+          <h3>Rejoindre une partie</h3>
+          <p>Entre le code de ton ami pour rejoindre sa salle.</p>
+          <input type="text" id="input-code" placeholder="Entre le code..." maxlength="6"
+            style="padding:10px;border-radius:5px;border:2px solid #ffcb05;background:#16213e;color:white;font-size:18px;text-align:center;width:150px;text-transform:uppercase;">
+          <br><br>
+          <button onclick="allerChoisirEquipe('rejoindre')">⚔️ Choisir mon équipe</button>
+        </div>
+
+      </div>
+
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="objets.js"></script>
+    <script src="multijoueur.js"></script>
+  </body>
+</html>

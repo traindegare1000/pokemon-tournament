@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="combat.css">
+    <title>Combat Pokémon</title>
+  </head>
+  <body>
+    <h1>Combat Pokémon</h1>
+
+    <div id="arene">
+
+      <div id="zone-joueur2" class="zone-joueur">
+        <h2>Joueur 2</h2>
+        <div id="pokemon-j2">
+          <img id="img-j2" src="" alt="">
+          <p id="nom-j2">---</p>
+          <div class="barre-pv">
+            <div id="pv-j2" class="pv-fill"></div>
+          </div>
+          <p id="texte-pv-j2">PV: 0 / 0</p>
+        </div>
+      </div>
+
+      <div id="zone-joueur1" class="zone-joueur">
+        <h2>Joueur 1</h2>
+        <div id="pokemon-j1">
+          <img id="img-j1" src="" alt="">
+          <p id="nom-j1">---</p>
+          <div class="barre-pv">
+            <div id="pv-j1" class="pv-fill"></div>
+          </div>
+          <p id="texte-pv-j1">PV: 0 / 0</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="log-combat">
+      <p>Le combat va commencer...</p>
+    </div>
+
+    <div id="zone-attaques">
+      <h3>Choisir une attaque :</h3>
+      <div id="boutons-attaques"></div>
+    </div>
+    <script src="objets.js"></script>
+<script src="types.js"></script>
+    <script src="combat.js"></script>
+  </body>
+</html>

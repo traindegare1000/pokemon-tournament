@@ -1,0 +1,88 @@
+#container-accueil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 40px auto;
+  max-width: 900px;
+}
+
+.carte-joueur {
+  background-color: #16213e;
+  border: 2px solid #ffcb05;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  width: 300px;
+}
+
+.carte-joueur h2 {
+  color: #ffcb05;
+  margin-bottom: 20px;
+}
+
+.carte-joueur button {
+  background-color: #ffcb05;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.carte-joueur button:hover {
+  background-color: white;
+}
+
+#vs {
+  font-size: 60px;
+  font-weight: bold;
+  color: #ff0000;
+}
+
+.apercu-equipe {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  min-height: 60px;
+}
+
+.apercu-equipe img {
+  width: 50px;
+  height: 50px;
+}
+
+#btn-lancer {
+  display: block;
+  margin: 20px auto;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#btn-lancer:hover {
+  background-color: #cc0000;
+}
+#btn-multi {
+  display: block;
+  margin: 10px auto;
+  background-color: #16213e;
+  color: #ffcb05;
+  border: 2px solid #ffcb05;
+  padding: 15px 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#btn-multi:hover {
+  background-color: #ffcb05;
+  color: black;
+}
