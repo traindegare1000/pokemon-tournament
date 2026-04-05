@@ -9,22 +9,28 @@ function allerChoisirEquipe(action) {
     }
     localStorage.setItem("actionMultijoueur", "rejoindre");
     localStorage.setItem("codeMultijoueur", code);
+    localStorage.setItem("joueurActuel", "2");
   } else {
     localStorage.setItem("actionMultijoueur", "creer");
+    localStorage.setItem("joueurActuel", "1");
   }
 
-  localStorage.setItem("joueurActuel", "multi");
+  localStorage.setItem("modeEquipeMulti", "true");
   window.location.href = "index.html";
 }
 
 window.onload = () => {
   let action = localStorage.getItem("actionMultijoueur");
-  let equipe = JSON.parse(localStorage.getItem("equipeJ1")) || [];
 
-  if (!action || equipe.length === 0) return;
+  let equipeJ1 = JSON.parse(localStorage.getItem("equipeJ1")) || [];
+  let equipeJ2 = JSON.parse(localStorage.getItem("equipeJ2")) || [];
+
+  let monEquipe = action === "creer" ? equipeJ1 : equipeJ2;
+
+  if (!action || monEquipe.length === 0) return;
 
   if (action === "creer") {
-    socket.emit("creer-salle", equipe);
+    socket.emit("creer-salle", monEquipe);
 
     socket.on("salle-creee", (code) => {
       document.getElementById("zone-code").classList.remove("cache");
@@ -36,7 +42,7 @@ window.onload = () => {
 
   } else if (action === "rejoindre") {
     let code = localStorage.getItem("codeMultijoueur");
-    socket.emit("rejoindre-salle", { code: code, equipe: equipe });
+    socket.emit("rejoindre-salle", { code: code, equipe: monEquipe });
     localStorage.setItem("roleMultijoueur", "joueur2");
   }
 
