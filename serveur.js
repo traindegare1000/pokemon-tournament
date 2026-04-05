@@ -37,9 +37,7 @@ io.on("connection", (socket) => {
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
     salles[code] = {
       joueur1: { id: socket.id, equipe: equipe },
-      joueur2: null,
-      equipeJ1: null,
-      equipeJ2: null
+      joueur2: null
     };
     socket.join(code);
     socket.emit("salle-creee", code);
@@ -69,23 +67,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("rejoindre-combat", ({ code, role }) => {
-  socket.join(code);
-});
-    if (!salles[code]) return;
-
-    if (role === "joueur1") {
-      salles[code].equipeJ1 = equipeJ1;
-    } else {
-      salles[code].equipeJ2 = equipeJ2;
-    }
-
-    let salle = salles[code];
-    if (salle.equipeJ1 && salle.equipeJ2) {
-      io.to(code).emit("equipes-recues", {
-        equipeJ1: salle.equipeJ1,
-        equipeJ2: salle.equipeJ2
-      });
-    }
+    socket.join(code);
   });
 
   socket.on("attaque", ({ code, attaque }) => {
