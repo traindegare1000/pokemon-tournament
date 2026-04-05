@@ -10,9 +10,42 @@ let roleJoueur = localStorage.getItem("roleMultijoueur") || "joueur1";
 let codePartie = localStorage.getItem("codeMultijoueur");
 let socket = null;
 
+function demarrerCombat() {
+  if (equipeJ1.length === 0 || equipeJ2.length === 0) {
+    log("Équipes manquantes ! Retourne sur la page d'accueil.");
+    return;
+  }
+  Promise.all([
+    chargerPokemon(equipeJ1[indexJ1].numero, equipeJ1[indexJ1].attaques, equipeJ1[indexJ1]),
+    chargerPokemon(equipeJ2[indexJ2].numero, equipeJ2[indexJ2].attaques, equipeJ2[indexJ2])
+  ]).then(([j1, j2]) => {
+    pokemonJ1 = j1;
+    pokemonJ1.objet = equipeJ1[indexJ1].objet || null;
+    pokemonJ2 = j2;
+    pokemonJ2.objet = equipeJ2[indexJ2].objet || null;
+    afficherPokemon();
+    afficherAttaques();
+    log(`Le combat commence ! ${pokemonJ1.nom} affronte ${pokemonJ2.nom} !`);
+  });
+}
+
 if (modeMultijoueur) {
   socket = io();
-  socket.emit("rejoindre-combat", codePartie);
+
+  socket.on("connect", () => {
+    socket.emit("rejoindre-combat", {
+      code: codePartie,
+      equipeJ1: equipeJ1,
+      equipeJ2: equipeJ2,
+      role: roleJoueur
+    });
+  });
+
+  socket.on("equipes-recues", ({ equipeJ1: eq1, equipeJ2: eq2 }) => {
+    equipeJ1 = eq1;
+    equipeJ2 = eq2;
+    demarrerCombat();
+  });
 
   socket.on("attaque-adverse", (attaque) => {
     let attaquant = roleJoueur === "joueur1" ? pokemonJ2 : pokemonJ1;
@@ -25,6 +58,8 @@ if (modeMultijoueur) {
     document.getElementById("boutons-attaques").innerHTML = "";
     document.querySelector("#zone-attaques h3").textContent = "Combat terminé !";
   });
+} else {
+  demarrerCombat();
 }
 
 function afficherPokemon() {
@@ -249,21 +284,4 @@ function chargerPokemon(numero, attaquesPerso, pokeData) {
         };
       });
     });
-}
-
-if (equipeJ1.length === 0 || equipeJ2.length === 0) {
-  log("Équipes manquantes ! Retourne sur la page d'accueil.");
-} else {
-  Promise.all([
-    chargerPokemon(equipeJ1[indexJ1].numero, equipeJ1[indexJ1].attaques, equipeJ1[indexJ1]),
-    chargerPokemon(equipeJ2[indexJ2].numero, equipeJ2[indexJ2].attaques, equipeJ2[indexJ2])
-  ]).then(([j1, j2]) => {
-    pokemonJ1 = j1;
-    pokemonJ1.objet = equipeJ1[indexJ1].objet || null;
-    pokemonJ2 = j2;
-    pokemonJ2.objet = equipeJ2[indexJ2].objet || null;
-    afficherPokemon();
-    afficherAttaques();
-    log(`Le combat commence ! ${pokemonJ1.nom} affronte ${pokemonJ2.nom} !`);
-  });
 }
