@@ -35,6 +35,32 @@ if (modeMultijoueur) {
   socket.on("connect", () => {
     socket.emit("rejoindre-combat", {
       code: codePartie,
+      role: roleJoueur
+    });
+  });
+
+  socket.on("attaque-adverse", (attaque) => {
+    let attaquant = roleJoueur === "joueur1" ? pokemonJ2 : pokemonJ1;
+    let defenseur = roleJoueur === "joueur1" ? pokemonJ1 : pokemonJ2;
+    appliquerAttaque(attaque, attaquant, defenseur);
+  });
+
+  socket.on("adversaire-deconnecte", () => {
+    log("Ton adversaire s'est déconnecté !");
+    document.getElementById("boutons-attaques").innerHTML = "";
+    document.querySelector("#zone-attaques h3").textContent = "Combat terminé !";
+  });
+
+  demarrerCombat();
+} else {
+  demarrerCombat();
+}
+if (modeMultijoueur) {
+  socket = io();
+
+  socket.on("connect", () => {
+    socket.emit("rejoindre-combat", {
+      code: codePartie,
       equipeJ1: equipeJ1,
       equipeJ2: equipeJ2,
       role: roleJoueur

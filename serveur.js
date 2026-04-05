@@ -68,8 +68,9 @@ io.on("connection", (socket) => {
     console.log(`Salle ${code} complète, combat prêt !`);
   });
 
-  socket.on("rejoindre-combat", ({ code, equipeJ1, equipeJ2, role }) => {
-    socket.join(code);
+  socket.on("rejoindre-combat", ({ code, role }) => {
+  socket.join(code);
+});
     if (!salles[code]) return;
 
     if (role === "joueur1") {
