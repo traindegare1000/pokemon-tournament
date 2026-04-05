@@ -349,9 +349,15 @@ function lancerCombat() {
   }
 
   let joueur = localStorage.getItem("joueurActuel") || "1";
+  let modeEquipeMulti = localStorage.getItem("modeEquipeMulti");
 
-  if (joueur === "multi") {
-    localStorage.setItem("equipeJ1", JSON.stringify(equipe));
+  if (modeEquipeMulti === "true") {
+    if (joueur === "1") {
+      localStorage.setItem("equipeJ1", JSON.stringify(equipe));
+    } else {
+      localStorage.setItem("equipeJ2", JSON.stringify(equipe));
+    }
+    localStorage.removeItem("modeEquipeMulti");
     window.location.href = "multijoueur.html";
   } else if (joueur === "1") {
     localStorage.setItem("equipeJ1", JSON.stringify(equipe));
@@ -361,6 +367,7 @@ function lancerCombat() {
     window.location.href = "accueil.html";
   }
 }
+
 
 afficherEquipe();
 chargerPage(pageActuelle);
