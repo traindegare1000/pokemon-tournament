@@ -5,6 +5,27 @@ let equipeJ1 = JSON.parse(localStorage.getItem("equipeJ1")) || [];
 let equipeJ2 = JSON.parse(localStorage.getItem("equipeJ2")) || [];
 let indexJ1 = 0;
 let indexJ2 = 0;
+let modeMultijoueur = localStorage.getItem("modeMultijoueur") === "true";
+let roleJoueur = localStorage.getItem("roleMultijoueur") || "joueur1";
+let codePartie = localStorage.getItem("codeMultijoueur");
+let socket = null;
+
+if (modeMultijoueur) {
+  socket = io();
+  socket.emit("rejoindre-combat", codePartie);
+
+  socket.on("attaque-adverse", (attaque) => {
+    let attaquant = roleJoueur === "joueur1" ? pokemonJ2 : pokemonJ1;
+    let defenseur = roleJoueur === "joueur1" ? pokemonJ1 : pokemonJ2;
+    appliquerAttaque(attaque, attaquant, defenseur);
+  });
+
+  socket.on("adversaire-deconnecte", () => {
+    log("Ton adversaire s'est déconnecté !");
+    document.getElementById("boutons-attaques").innerHTML = "";
+    document.querySelector("#zone-attaques h3").textContent = "Combat terminé !";
+  });
+}
 
 function afficherPokemon() {
   document.getElementById("img-j1").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonJ1.numero}.png`;
@@ -22,6 +43,13 @@ function log(message) {
   document.getElementById("log-combat").innerHTML = `<p>${message}</p>`;
 }
 
+function estMonTour() {
+  if (!modeMultijoueur) return true;
+  if (roleJoueur === "joueur1" && tourJoueur === 1) return true;
+  if (roleJoueur === "joueur2" && tourJoueur === 2) return true;
+  return false;
+}
+
 function afficherAttaques() {
   let conteneur = document.getElementById("boutons-attaques");
   conteneur.innerHTML = "";
@@ -30,19 +58,28 @@ function afficherAttaques() {
   let attaquant = tourJoueur === 1 ? pokemonJ1 : pokemonJ2;
   let defenseur = tourJoueur === 1 ? pokemonJ2 : pokemonJ1;
 
-  document.querySelector("#zone-attaques h3").textContent =
-    `${attaquant.nom} attaque ! Choisir une attaque :`;
+  if (estMonTour()) {
+    document.querySelector("#zone-attaques h3").textContent =
+      `${attaquant.nom} attaque ! Choisir une attaque :`;
 
-  attaques.forEach(attaque => {
-    let btn = document.createElement("button");
-    btn.classList.add("btn-attaque");
-    btn.textContent = attaque.nom;
-    btn.addEventListener("click", () => utiliserAttaque(attaque, attaquant, defenseur));
-    conteneur.appendChild(btn);
-  });
+    attaques.forEach(attaque => {
+      let btn = document.createElement("button");
+      btn.classList.add("btn-attaque");
+      btn.textContent = attaque.nom;
+      btn.addEventListener("click", () => {
+        if (modeMultijoueur) {
+          socket.emit("attaque", { code: codePartie, attaque: attaque });
+        }
+        utiliserAttaque(attaque, attaquant, defenseur);
+      });
+      conteneur.appendChild(btn);
+    });
+  } else {
+    document.querySelector("#zone-attaques h3").textContent = "En attente de l'adversaire...";
+  }
 }
 
-function utiliserAttaque(attaque, attaquant, defenseur) {
+function appliquerAttaque(attaque, attaquant, defenseur) {
   let multiplicateur = getMultiplicateur(attaque.type, defenseur.types);
   let bonusAttaque = 1;
 
@@ -63,7 +100,7 @@ function utiliserAttaque(attaque, attaquant, defenseur) {
     if (defenseur.pvActuels - degats <= 0) {
       degats = defenseur.pvActuels - 1;
       defenseur.focusbanduise = true;
-      log(`${defenseur.nom} tient grâce au Focusband ! Il reste avec 1 PV !`);
+      log(`${defenseur.nom} tient grâce au Focusband !`);
     }
   }
 
@@ -117,6 +154,7 @@ function utiliserAttaque(attaque, attaquant, defenseur) {
           pokemonJ2 = p;
           pokemonJ2.objet = equipeJ2[indexJ2].objet || null;
           afficherPokemon();
+          tourJoueur = tourJoueur === 1 ? 2 : 1;
           afficherAttaques();
           log(`Joueur 2 envoie ${pokemonJ2.nom} !`);
         });
@@ -132,6 +170,7 @@ function utiliserAttaque(attaque, attaquant, defenseur) {
           pokemonJ1 = p;
           pokemonJ1.objet = equipeJ1[indexJ1].objet || null;
           afficherPokemon();
+          tourJoueur = tourJoueur === 1 ? 2 : 1;
           afficherAttaques();
           log(`Joueur 1 envoie ${pokemonJ1.nom} !`);
         });
@@ -142,6 +181,10 @@ function utiliserAttaque(attaque, attaquant, defenseur) {
     tourJoueur = tourJoueur === 1 ? 2 : 1;
     afficherAttaques();
   }, 500);
+}
+
+function utiliserAttaque(attaque, attaquant, defenseur) {
+  appliquerAttaque(attaque, attaquant, defenseur);
 }
 
 function calculerStat(base, iv, ev, niveau, estPV) {
