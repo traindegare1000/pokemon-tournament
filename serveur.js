@@ -32,6 +32,9 @@ const io = new Server(server);
 const salles = {};
 
 io.on("connection", (socket) => {
+  socket.on("rejoindre-combat", (code) => {
+  socket.join(code);
+});
   console.log("Joueur connecté :", socket.id);
 
   socket.on("creer-salle", (equipe) => {
