@@ -103,6 +103,7 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log("Serveur démarré sur http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
 });
