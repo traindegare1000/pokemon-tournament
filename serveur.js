@@ -35,7 +35,7 @@ io.on("connection", (socket) => {
 
   socket.on("creer-salle", (equipe) => {
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-    salles[code] = { type: "combat", joueur1: { id: socket.id, equipe }, joueur2: null };
+    salles[code] = { type: "combat", joueur1: { id: socket.id, equipe }, joueur2: null, votes: {} };
     socket.join(code);
     socket.emit("salle-creee", code);
   });
@@ -52,6 +52,34 @@ io.on("connection", (socket) => {
   socket.on("rejoindre-combat", ({ code }) => { socket.join(code); });
 
   socket.on("attaque", ({ code, attaque }) => { socket.to(code).emit("attaque-adverse", attaque); });
+
+  // ─── VOTE MAP ─────────────────────────────────────────────────────────────
+  socket.on("vote-map", ({ code, mapId }) => {
+    const salle = salles[code];
+    if (!salle) return;
+
+    if (!salle.votes) salle.votes = {};
+    salle.votes[socket.id] = mapId;
+
+    // Envoyer le vote à l'adversaire
+    socket.to(code).emit("vote-map-adversaire", mapId);
+
+    // Si les deux ont voté, résoudre
+    const votants = Object.keys(salle.votes);
+    if (votants.length >= 2) {
+      const votes = Object.values(salle.votes);
+      let mapChoisie;
+      if (votes[0] === votes[1]) {
+        mapChoisie = votes[0];
+      } else {
+        mapChoisie = Math.random() < 0.5 ? votes[0] : votes[1];
+      }
+      salle.votes = {};
+      io.to(code).emit("map-choisie", mapChoisie);
+    }
+  });
+
+  // ─── TOURNOI ──────────────────────────────────────────────────────────────
 
   socket.on("creer-tournoi", ({ nomTournoi, nomJoueur }) => {
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -119,7 +147,7 @@ io.on("connection", (socket) => {
     const codeCombat = codeTournoi + "_" + tourIndex + "_" + matchIndex;
     const equipeJ1 = salle.equipes[nomJ1];
     const equipeJ2 = salle.equipes[nomJ2];
-    salles[codeCombat] = { type: "combat-tournoi", codeTournoi, tourIndex, matchIndex, nomJ1, nomJ2 };
+    salles[codeCombat] = { type: "combat-tournoi", codeTournoi, tourIndex, matchIndex, nomJ1, nomJ2, votes: {} };
     const socketJ1 = io.sockets.sockets.get(salle.socketIds[nomJ1]);
     const socketJ2 = io.sockets.sockets.get(salle.socketIds[nomJ2]);
     if (socketJ1) { socketJ1.join(codeCombat); socketJ1.emit("match-lance", { codeCombat, role: "joueur1", equipeJ1, equipeJ2, adversaire: nomJ2, tourIndex, matchIndex }); }

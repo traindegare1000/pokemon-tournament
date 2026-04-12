@@ -7,47 +7,59 @@
     <title>Combat Pokémon</title>
   </head>
   <body>
-    <h1>Combat Pokémon</h1>
 
-    <div id="arene">
+    <!-- ÉCRAN DE VOTE MAP -->
+    <div id="ecran-vote-map">
+      <h1>⚔️ Choisir l'arène !</h1>
+      <p id="statut-vote" style="color:#ffcb05;font-size:16px;margin-bottom:20px;">Choisissez votre arène préférée !</p>
+      <div id="grille-maps"></div>
+      <p id="attente-adversaire" class="cache" style="color:gray;margin-top:20px;">⏳ En attente du choix de l'adversaire...</p>
+    </div>
 
-      <div id="zone-joueur2" class="zone-joueur">
-        <h2>Joueur 2</h2>
-        <div id="pokemon-j2">
-          <img id="img-j2" src="" alt="">
-          <p id="nom-j2">---</p>
-          <div class="barre-pv">
-            <div id="pv-j2" class="pv-fill"></div>
+    <!-- ARÈNE DE COMBAT -->
+    <div id="ecran-combat" class="cache">
+      <div id="nom-map-affiche"></div>
+
+      <div id="arene">
+        <div id="zone-joueur2" class="zone-joueur">
+          <h2 id="label-j2">Joueur 2</h2>
+          <div id="pokemon-j2">
+            <img id="img-j2" src="" alt="">
+            <p id="nom-j2">---</p>
+            <div class="barre-pv">
+              <div id="pv-j2" class="pv-fill"></div>
+            </div>
+            <p id="texte-pv-j2">PV: 0 / 0</p>
           </div>
-          <p id="texte-pv-j2">PV: 0 / 0</p>
+        </div>
+
+        <div id="zone-joueur1" class="zone-joueur">
+          <h2 id="label-j1">Joueur 1</h2>
+          <div id="pokemon-j1">
+            <img id="img-j1" src="" alt="">
+            <p id="nom-j1">---</p>
+            <div class="barre-pv">
+              <div id="pv-j1" class="pv-fill"></div>
+            </div>
+            <p id="texte-pv-j1">PV: 0 / 0</p>
+          </div>
         </div>
       </div>
 
-      <div id="zone-joueur1" class="zone-joueur">
-        <h2>Joueur 1</h2>
-        <div id="pokemon-j1">
-          <img id="img-j1" src="" alt="">
-          <p id="nom-j1">---</p>
-          <div class="barre-pv">
-            <div id="pv-j1" class="pv-fill"></div>
-          </div>
-          <p id="texte-pv-j1">PV: 0 / 0</p>
-        </div>
+      <div id="log-combat">
+        <p>Le combat va commencer...</p>
       </div>
 
+      <div id="zone-attaques">
+        <h3>Choisir une attaque :</h3>
+        <div id="boutons-attaques"></div>
+      </div>
     </div>
 
-    <div id="log-combat">
-      <p>Le combat va commencer...</p>
-    </div>
-
-    <div id="zone-attaques">
-      <h3>Choisir une attaque :</h3>
-      <div id="boutons-attaques"></div>
-    </div>
     <script src="objets.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-<script src="types.js"></script>
+    <script src="types.js"></script>
+    <script src="maps.js"></script>
     <script src="combat.js"></script>
   </body>
 </html>

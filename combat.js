@@ -15,6 +15,52 @@ let tourIndex = parseInt(localStorage.getItem("tourIndex") || "0");
 let matchIndex = parseInt(localStorage.getItem("matchIndex") || "0");
 let socket = null;
 let combatTermine = false;
+let monVote = null;
+let voteAdversaire = null;
+
+// ─── SYSTÈME DE VOTE MAP ─────────────────────────────────────────────────
+
+function afficherEcranVote() {
+  document.getElementById("ecran-vote-map").classList.remove("cache");
+  document.getElementById("ecran-combat").classList.add("cache");
+
+  afficherGrilleMaps((mapId) => {
+    monVote = mapId;
+    document.getElementById("attente-adversaire").classList.remove("cache");
+    document.getElementById("statut-vote").textContent = `✅ Tu as voté pour : ${getMapById(mapId).nom}`;
+
+    if (modeMultijoueur) {
+      socket.emit("vote-map", { code: codePartie, mapId });
+    } else {
+      // En local, J2 vote aléatoirement
+      let mapAleatoire = MAPS[Math.floor(Math.random() * MAPS.length)].id;
+      voteAdversaire = mapAleatoire;
+      resoudreVote();
+    }
+  });
+}
+
+function resoudreVote() {
+  let mapChoisie;
+  if (monVote === voteAdversaire) {
+    mapChoisie = monVote;
+  } else {
+    // Tirage au sort entre les deux votes
+    mapChoisie = Math.random() < 0.5 ? monVote : voteAdversaire;
+  }
+
+  let map = getMapById(mapChoisie);
+  lancerCombatAvecMap(map);
+}
+
+function lancerCombatAvecMap(map) {
+  document.getElementById("ecran-vote-map").classList.add("cache");
+  document.getElementById("ecran-combat").classList.remove("cache");
+  appliquerMap(map);
+  demarrerCombat();
+}
+
+// ─── COMBAT ──────────────────────────────────────────────────────────────
 
 function demarrerCombat() {
   if (equipeJ1.length === 0 || equipeJ2.length === 0) {
@@ -40,19 +86,32 @@ if (modeMultijoueur) {
   socket.on("connect", () => {
     socket.emit("rejoindre-combat", { code: codePartie, role: roleJoueur });
   });
+
   socket.on("attaque-adverse", (attaque) => {
     let attaquant = roleJoueur === "joueur1" ? pokemonJ2 : pokemonJ1;
     let defenseur = roleJoueur === "joueur1" ? pokemonJ1 : pokemonJ2;
     appliquerAttaque(attaque, attaquant, defenseur);
   });
+
+  socket.on("vote-map-adversaire", (mapId) => {
+    voteAdversaire = mapId;
+    if (monVote) resoudreVote();
+  });
+
+  socket.on("map-choisie", (mapId) => {
+    let map = getMapById(mapId);
+    lancerCombatAvecMap(map);
+  });
+
   socket.on("adversaire-deconnecte", () => {
     log("Ton adversaire s'est déconnecté !");
     document.getElementById("boutons-attaques").innerHTML = "";
     document.querySelector("#zone-attaques h3").textContent = "Combat terminé !";
   });
-  demarrerCombat();
+
+  afficherEcranVote();
 } else {
-  demarrerCombat();
+  afficherEcranVote();
 }
 
 function afficherPokemon() {
