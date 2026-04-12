@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tournoi.css">
+    <title>Tournoi Pokémon</title>
+  </head>
+  <body>
+    <h1>🏆 Tournoi Pokémon</h1>
+
+    <div id="section-creation">
+      <h2>Créer un tournoi</h2>
+      <div id="form-tournoi">
+        <input type="text" id="input-nom-tournoi" placeholder="Nom du tournoi...">
+        <input type="text" id="input-nom-joueur" placeholder="Ton nom de joueur...">
+        <button onclick="creerTournoi()">🏆 Créer le tournoi</button>
+      </div>
+    </div>
+
+    <div id="section-rejoindre">
+      <h2>Rejoindre un tournoi</h2>
+      <div id="form-rejoindre">
+        <input type="text" id="input-code-tournoi" placeholder="Code du tournoi..." maxlength="6" style="text-transform:uppercase">
+        <input type="text" id="input-nom-joueur2" placeholder="Ton nom de joueur...">
+        <button onclick="rejoindreTournoi()">⚔️ Rejoindre</button>
+      </div>
+    </div>
+
+    <div id="section-tournoi" class="cache">
+      <div id="info-tournoi">
+        <h2 id="titre-tournoi"></h2>
+        <p id="code-tournoi-affiche" style="font-size:30px;font-weight:bold;color:#ffcb05;letter-spacing:5px;"></p>
+        <p id="statut-tournoi" style="color:gray;"></p>
+        <p id="statut-equipes" style="color:#4CAF50;font-size:14px;"></p>
+      </div>
+
+      <div id="liste-joueurs"></div>
+
+      <div id="zone-boutons" style="display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin:20px 0;">
+        <button id="btn-equipe" class="cache" onclick="allerChoisirEquipe()">🎮 Choisir mon équipe</button>
+        <button id="btn-demarrer" class="cache" onclick="demarrerTournoi()">🚀 Démarrer le tournoi !</button>
+      </div>
+
+      <div id="bracket"></div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="tournoi.js"></script>
+  </body>
+</html>

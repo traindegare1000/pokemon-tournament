@@ -348,6 +348,14 @@ function lancerCombat() {
     return;
   }
 
+  let modeTournoi = localStorage.getItem("modeTournoi");
+  if (modeTournoi === "true") {
+    localStorage.removeItem("modeTournoi");
+    localStorage.setItem("equipeATournoi", JSON.stringify(equipe));
+    window.location.href = "tournoi.html";
+    return;
+  }
+
   let joueur = localStorage.getItem("joueurActuel") || "1";
   let modeEquipeMulti = localStorage.getItem("modeEquipeMulti");
 
@@ -367,7 +375,6 @@ function lancerCombat() {
     window.location.href = "accueil.html";
   }
 }
-
 
 afficherEquipe();
 chargerPage(pageActuelle);
