@@ -106,76 +106,65 @@ function getMapById(id) {
 }
 
 function appliquerMap(map) {
-  let arene = document.getElementById("arene");
-
   // Supprimer ancien style CSS
   let ancienFond = document.getElementById("fond-combat-css");
   if (ancienFond) ancienFond.remove();
 
-  // Injecter le fond CSS dynamiquement
   let style = document.createElement("style");
   style.id = "fond-combat-css";
   style.textContent = `
+    body {
+      background-color: ${map.couleurFond} !important;
+    }
+
     #arene {
       background: linear-gradient(
         180deg,
         ${map.couleurFond} 0%,
-        ${map.couleurFond} 55%,
-        ${map.couleurSol} 55%,
+        ${map.couleurFond} 50%,
+        ${map.couleurSol} 50%,
         ${map.couleurSol} 100%
       ) !important;
+    }
+
+    #zone-joueur2::after {
+      background: ${map.couleurPlateforme} !important;
+      opacity: 0.5;
+    }
+
+    #zone-joueur1::after {
+      background: ${map.couleurPlateforme} !important;
+      opacity: 0.5;
+    }
+
+    #log-combat {
       border-color: ${map.couleurCercles} !important;
     }
 
-    #arene::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: none;
-      z-index: 0;
+    #zone-attaques {
+      border-color: ${map.couleurCercles} !important;
     }
 
-    #zone-joueur2::before {
-      content: "";
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 25px;
-      background: ${map.couleurPlateforme};
-      border-radius: 50%;
-      opacity: 0.5;
-      z-index: 0;
+    #zone-attaques h3 {
+      color: ${map.couleurCercles} !important;
     }
 
-    #zone-joueur1::before {
-      content: "";
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 120px;
-      height: 25px;
-      background: ${map.couleurPlateforme};
-      border-radius: 50%;
-      opacity: 0.5;
-      z-index: 0;
+    .btn-attaque {
+      border-color: ${map.couleurCercles} !important;
     }
 
-    #zone-joueur1, #zone-joueur2 {
-      position: relative;
+    .btn-attaque:hover {
+      background-color: ${map.couleurCercles} !important;
+    }
+
+    #nom-map-affiche {
+      color: ${map.couleurCercles} !important;
     }
   `;
   document.head.appendChild(style);
 
   // Nom de la map
   document.getElementById("nom-map-affiche").textContent = `${map.emoji} ${map.nom} — ${map.jeu}`;
-  document.getElementById("nom-map-affiche").style.color = map.couleurCercles;
-
-  // Fond de page
-  document.body.style.backgroundColor = map.couleurFond;
 }
 
 function afficherGrilleMaps(onChoix) {
@@ -186,7 +175,7 @@ function afficherGrilleMaps(onChoix) {
     let carte = document.createElement("div");
     carte.classList.add("carte-map");
     carte.style.borderColor = map.couleurCercles;
-    carte.style.background = `linear-gradient(180deg, ${map.couleurFond} 55%, ${map.couleurSol} 100%)`;
+    carte.style.background = `linear-gradient(180deg, ${map.couleurFond} 50%, ${map.couleurSol} 100%)`;
 
     let overlay = document.createElement("div");
     overlay.classList.add("overlay-map");

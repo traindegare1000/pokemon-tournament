@@ -3,11 +3,19 @@
   text-align: center;
   padding: 20px;
   min-height: 100vh;
+  background-color: #1a1a2e;
 }
 
 #ecran-vote-map h1 {
   color: #ffcb05;
-  margin-bottom: 10px;
+  font-size: 28px;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
+}
+
+#statut-vote {
+  font-size: 15px;
+  margin-bottom: 20px;
 }
 
 #grille-maps {
@@ -20,9 +28,9 @@
 }
 
 .carte-map {
-  width: 160px;
-  height: 110px;
-  border-radius: 10px;
+  width: 165px;
+  height: 115px;
+  border-radius: 12px;
   border: 3px solid #ffcb05;
   cursor: pointer;
   overflow: hidden;
@@ -31,7 +39,8 @@
 }
 
 .carte-map:hover {
-  transform: scale(1.06);
+  transform: scale(1.07);
+  box-shadow: 0 0 15px rgba(255, 203, 5, 0.6);
 }
 
 .carte-map.selectionnee {
@@ -43,24 +52,26 @@
   position: absolute;
   top: 0; left: 0;
   width: 100%;
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 8px;
   box-sizing: border-box;
+  background: rgba(0,0,0,0.2);
 }
 
 .emoji-map {
-  font-size: 28px;
-  margin-bottom: 4px;
+  font-size: 30px;
+  margin-bottom: 5px;
 }
 
 .nom-map {
   font-size: 12px;
   font-weight: bold;
-  text-shadow: 1px 1px 3px black;
+  color: white;
+  text-shadow: 1px 1px 4px black;
   text-align: center;
 }
 
@@ -68,79 +79,124 @@
   font-size: 9px;
   color: #ddd;
   text-shadow: 1px 1px 2px black;
-  margin-top: 2px;
+  margin-top: 3px;
   text-align: center;
 }
 
-/* ─── NOM MAP AFFICHÉ ───────────────────────────────────────────────────── */
+#attente-adversaire {
+  color: gray;
+  font-size: 14px;
+  margin-top: 15px;
+  animation: clignoter 1.2s infinite;
+}
+
+@keyframes clignoter {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─── NOM MAP ───────────────────────────────────────────────────────────── */
 #nom-map-affiche {
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
-  margin: 8px 0;
-  letter-spacing: 2px;
+  margin: 8px 0 0 0;
+  letter-spacing: 3px;
+  text-transform: uppercase;
   text-shadow: 1px 1px 4px black;
 }
 
-/* ─── ARÈNE DE COMBAT ───────────────────────────────────────────────────── */
+/* ─── ARÈNE ─────────────────────────────────────────────────────────────── */
 #arene {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-end;
-  padding: 20px 30px 30px 30px;
-  margin: 10px auto;
+  padding: 30px 60px 50px 60px;
+  margin: 0 auto;
   max-width: 800px;
   border-radius: 0;
   border: none;
-  border-top: 3px solid #ffcb05;
   position: relative;
   overflow: hidden;
-  min-height: 240px;
+  min-height: 260px;
 }
 
-.zone-joueur {
+/* Joueur 2 en haut à gauche, plus petit */
+#zone-joueur2 {
   text-align: center;
-  width: 280px;
+  width: 220px;
+  margin-bottom: 60px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Joueur 1 en bas à droite, plus grand */
+#zone-joueur1 {
+  text-align: center;
+  width: 260px;
+  margin-bottom: 0px;
   position: relative;
   z-index: 2;
 }
 
 .zone-joueur h2 {
   color: #ffcb05;
-  margin-bottom: 8px;
-  text-shadow: 2px 2px 4px black;
-  font-size: 16px;
+  margin-bottom: 6px;
+  text-shadow: 2px 2px 6px black;
+  font-size: 15px;
+  letter-spacing: 1px;
 }
 
-/* Joueur 2 est plus haut (comme dans les vrais jeux) */
-#zone-joueur2 {
-  margin-bottom: 40px;
-}
-
-/* Joueur 1 est plus bas */
-#zone-joueur1 {
-  margin-bottom: 0px;
-}
-
-.zone-joueur img {
-  width: 130px;
-  height: 130px;
-  image-rendering: pixelated;
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.8));
-}
-
-/* Joueur 2 plus petit (plus loin) */
+/* Pokémon J2 plus petit (plus loin) */
 #zone-joueur2 img {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
 }
 
+/* Pokémon J1 plus grand (plus proche) */
+#zone-joueur1 img {
+  width: 140px;
+  height: 140px;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
+}
+
+/* Plateforme ovale sous les Pokémon */
+#zone-joueur2::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 20px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+#zone-joueur1::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 130px;
+  height: 25px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* ─── BARRES DE PV ───────────────────────────────────────────────────────── */
 .barre-pv {
-  background-color: #333;
+  background-color: rgba(0,0,0,0.4);
   border-radius: 10px;
-  height: 12px;
+  height: 10px;
   width: 100%;
-  margin: 8px 0;
+  margin: 6px 0;
   overflow: hidden;
   border: 1px solid rgba(255,255,255,0.2);
 }
@@ -153,57 +209,77 @@
   transition: width 0.5s, background-color 0.5s;
 }
 
-/* ─── LOG ET ATTAQUES ───────────────────────────────────────────────────── */
+.zone-joueur p {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 1px 1px 3px black;
+  margin: 3px 0;
+  text-transform: capitalize;
+}
+
+/* ─── LOG ────────────────────────────────────────────────────────────────── */
 #log-combat {
-  background-color: rgba(10, 10, 30, 0.92);
+  background-color: rgba(5, 5, 20, 0.95);
   border: 3px solid #ffcb05;
+  border-bottom: none;
   border-radius: 0;
-  padding: 15px 20px;
+  padding: 15px 25px;
   margin: 0 auto;
   max-width: 800px;
   min-height: 70px;
   font-size: 15px;
   font-family: "Courier New", monospace;
+  color: white;
+  text-align: center;
 }
 
+/* ─── ZONE ATTAQUES ──────────────────────────────────────────────────────── */
 #zone-attaques {
   max-width: 800px;
-  margin: 10px auto;
+  margin: 0 auto 30px auto;
   text-align: center;
-  background-color: rgba(10, 10, 30, 0.92);
+  background-color: rgba(5, 5, 20, 0.95);
   border: 3px solid #ffcb05;
-  border-top: none;
-  padding: 15px;
+  padding: 15px 20px;
 }
 
 #zone-attaques h3 {
   color: #ffcb05;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 14px;
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+  text-transform: capitalize;
 }
 
 #boutons-attaques {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  max-width: 500px;
+  gap: 10px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
 .btn-attaque {
-  background-color: #16213e;
+  background-color: #0d1b3e;
   border: 2px solid #ffcb05;
   color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
+  padding: 12px 15px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 13px;
   font-family: "Courier New", monospace;
-  transition: background-color 0.15s;
+  transition: all 0.15s;
   text-transform: capitalize;
+  letter-spacing: 1px;
 }
 
 .btn-attaque:hover {
   background-color: #ffcb05;
   color: black;
+  transform: scale(1.03);
+}
+
+.btn-attaque:active {
+  transform: scale(0.97);
 }
