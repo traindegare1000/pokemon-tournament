@@ -160,7 +160,6 @@ function appliquerMap(map) {
         radial-gradient(ellipse 18px 8px at 78% 90%, ${map.couleurCercles} 60%, transparent 65%),
         radial-gradient(ellipse 18px 8px at 88% 90%, ${map.couleurCercles} 60%, transparent 65%),
         radial-gradient(ellipse 18px 8px at 98% 90%, ${map.couleurCercles} 60%, transparent 65%);
-      z-index: 0;
     }
 
     /* Plateforme joueur 2 (en haut à droite) */
