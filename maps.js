@@ -128,6 +128,9 @@ function appliquerMap(map) {
       border: none !important;
     }
 
+    #ecran-combat {
+      background-color: ${map.couleurFond} !important;
+    }
     body {
       background-color: ${map.couleurFond} !important;
     }
