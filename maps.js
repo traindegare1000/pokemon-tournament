@@ -117,7 +117,7 @@ function appliquerMap(map) {
       background-color: ${map.couleurFond} !important;
     }
 
-    #arene {
+   #arene {
       background: linear-gradient(
         180deg,
         ${map.couleurFond} 0%,
@@ -125,6 +125,11 @@ function appliquerMap(map) {
         ${map.couleurSol} 50%,
         ${map.couleurSol} 100%
       ) !important;
+      border: none !important;
+    }
+
+    body {
+      background-color: ${map.couleurFond} !important;
     }
 
     #zone-joueur2::after {
