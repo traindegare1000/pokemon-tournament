@@ -13,47 +13,64 @@
       <h1>⚔️ Choisir l'arène !</h1>
       <p id="statut-vote" style="color:#ffcb05;font-size:16px;margin-bottom:20px;">Choisissez votre arène préférée !</p>
       <div id="grille-maps"></div>
-      <p id="attente-adversaire" class="cache" style="color:gray;margin-top:20px;">⏳ En attente du choix de l'adversaire...</p>
+      <p id="attente-adversaire" class="cache">⏳ En attente du choix de l'adversaire...</p>
     </div>
 
     <!-- ARÈNE DE COMBAT -->
     <div id="ecran-combat" class="cache">
+
       <div id="nom-map-affiche"></div>
 
-      <div id="arene">
-        <div id="zone-joueur2" class="zone-joueur">
-          <h2 id="label-j2">Joueur 2</h2>
-          <div id="pokemon-j2">
-            <img id="img-j2" src="" alt="">
-            <p id="nom-j2">---</p>
+      <!-- BOÎTES D'INFO STYLE DS -->
+      <div id="infos-combat">
+
+        <!-- Info Joueur 2 (en haut à gauche) -->
+        <div id="info-j2" class="info-joueur info-gauche">
+          <div class="info-nom" id="nom-j2">---</div>
+          <div class="info-pv-barre">
+            <span class="label-pv">PV</span>
             <div class="barre-pv">
               <div id="pv-j2" class="pv-fill"></div>
             </div>
-            <p id="texte-pv-j2">PV: 0 / 0</p>
           </div>
+          <div class="info-pv-texte" id="texte-pv-j2">0 / 0</div>
         </div>
 
-        <div id="zone-joueur1" class="zone-joueur">
-          <h2 id="label-j1">Joueur 1</h2>
-          <div id="pokemon-j1">
-            <img id="img-j1" src="" alt="">
-            <p id="nom-j1">---</p>
+        <!-- Info Joueur 1 (en haut à droite) -->
+        <div id="info-j1" class="info-joueur info-droite">
+          <div class="info-nom" id="nom-j1">---</div>
+          <div class="info-pv-barre">
+            <span class="label-pv">PV</span>
             <div class="barre-pv">
               <div id="pv-j1" class="pv-fill"></div>
             </div>
-            <p id="texte-pv-j1">PV: 0 / 0</p>
           </div>
+          <div class="info-pv-texte" id="texte-pv-j1">0 / 0</div>
+        </div>
+
+      </div>
+
+      <!-- ARÈNE -->
+      <div id="arene">
+        <div id="zone-joueur2" class="zone-joueur">
+          <img id="img-j2" src="" alt="">
+        </div>
+        <div id="zone-joueur1" class="zone-joueur">
+          <img id="img-j1" src="" alt="">
         </div>
       </div>
 
+      <!-- LOG -->
       <div id="log-combat">
         <p>Le combat va commencer...</p>
       </div>
 
+      <!-- ATTAQUES -->
       <div id="zone-attaques">
         <h3>Choisir une attaque :</h3>
         <div id="boutons-attaques"></div>
       </div>
+
     </div>
 
     <script src="objets.js"></script>

@@ -18,7 +18,7 @@ let combatTermine = false;
 let monVote = null;
 let voteAdversaire = null;
 
-// ─── SYSTÈME DE VOTE MAP ─────────────────────────────────────────────────
+// ─── VOTE MAP ─────────────────────────────────────────────────────────────
 
 function afficherEcranVote() {
   document.getElementById("ecran-vote-map").classList.remove("cache");
@@ -32,7 +32,6 @@ function afficherEcranVote() {
     if (modeMultijoueur) {
       socket.emit("vote-map", { code: codePartie, mapId });
     } else {
-      // En local, J2 vote aléatoirement
       let mapAleatoire = MAPS[Math.floor(Math.random() * MAPS.length)].id;
       voteAdversaire = mapAleatoire;
       resoudreVote();
@@ -45,10 +44,8 @@ function resoudreVote() {
   if (monVote === voteAdversaire) {
     mapChoisie = monVote;
   } else {
-    // Tirage au sort entre les deux votes
     mapChoisie = Math.random() < 0.5 ? monVote : voteAdversaire;
   }
-
   let map = getMapById(mapChoisie);
   lancerCombatAvecMap(map);
 }
@@ -60,7 +57,7 @@ function lancerCombatAvecMap(map) {
   demarrerCombat();
 }
 
-// ─── COMBAT ──────────────────────────────────────────────────────────────
+// ─── COMBAT ───────────────────────────────────────────────────────────────
 
 function demarrerCombat() {
   if (equipeJ1.length === 0 || equipeJ2.length === 0) {
@@ -86,45 +83,44 @@ if (modeMultijoueur) {
   socket.on("connect", () => {
     socket.emit("rejoindre-combat", { code: codePartie, role: roleJoueur });
   });
-
   socket.on("attaque-adverse", (attaque) => {
     let attaquant = roleJoueur === "joueur1" ? pokemonJ2 : pokemonJ1;
     let defenseur = roleJoueur === "joueur1" ? pokemonJ1 : pokemonJ2;
     appliquerAttaque(attaque, attaquant, defenseur);
   });
-
   socket.on("vote-map-adversaire", (mapId) => {
     voteAdversaire = mapId;
     if (monVote) resoudreVote();
   });
-
   socket.on("map-choisie", (mapId) => {
     let map = getMapById(mapId);
     lancerCombatAvecMap(map);
   });
-
   socket.on("adversaire-deconnecte", () => {
     log("Ton adversaire s'est déconnecté !");
     document.getElementById("boutons-attaques").innerHTML = "";
     document.querySelector("#zone-attaques h3").textContent = "Combat terminé !";
   });
-
   afficherEcranVote();
 } else {
   afficherEcranVote();
 }
 
 function afficherPokemon() {
+  // Images
   document.getElementById("img-j1").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonJ1.numero}.png`;
+  document.getElementById("img-j2").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonJ2.numero}.png`;
+
+  // Infos J1
   document.getElementById("nom-j1").textContent = pokemonJ1.nom;
-  document.getElementById("texte-pv-j1").textContent = `PV: ${pokemonJ1.pvActuels} / ${pokemonJ1.pvMax}`;
+  document.getElementById("texte-pv-j1").textContent = `${pokemonJ1.pvActuels} / ${pokemonJ1.pvMax}`;
   let pct1 = (pokemonJ1.pvActuels / pokemonJ1.pvMax) * 100;
   document.getElementById("pv-j1").style.width = `${pct1}%`;
   document.getElementById("pv-j1").style.backgroundColor = pct1 > 50 ? "#4CAF50" : pct1 > 20 ? "#ff9800" : "#f44336";
 
-  document.getElementById("img-j2").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonJ2.numero}.png`;
+  // Infos J2
   document.getElementById("nom-j2").textContent = pokemonJ2.nom;
-  document.getElementById("texte-pv-j2").textContent = `PV: ${pokemonJ2.pvActuels} / ${pokemonJ2.pvMax}`;
+  document.getElementById("texte-pv-j2").textContent = `${pokemonJ2.pvActuels} / ${pokemonJ2.pvMax}`;
   let pct2 = (pokemonJ2.pvActuels / pokemonJ2.pvMax) * 100;
   document.getElementById("pv-j2").style.width = `${pct2}%`;
   document.getElementById("pv-j2").style.backgroundColor = pct2 > 50 ? "#4CAF50" : pct2 > 20 ? "#ff9800" : "#f44336";

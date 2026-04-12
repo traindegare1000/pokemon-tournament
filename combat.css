@@ -13,11 +13,6 @@
   text-shadow: 0 0 10px rgba(255, 203, 5, 0.5);
 }
 
-#statut-vote {
-  font-size: 15px;
-  margin-bottom: 20px;
-}
-
 #grille-maps {
   display: flex;
   flex-wrap: wrap;
@@ -62,10 +57,7 @@
   background: rgba(0,0,0,0.2);
 }
 
-.emoji-map {
-  font-size: 30px;
-  margin-bottom: 5px;
-}
+.emoji-map { font-size: 30px; margin-bottom: 5px; }
 
 .nom-map {
   font-size: 12px;
@@ -98,107 +90,65 @@
 /* ─── NOM MAP ───────────────────────────────────────────────────────────── */
 #nom-map-affiche {
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
-  margin: 8px 0 0 0;
+  padding: 6px 0;
   letter-spacing: 3px;
   text-transform: uppercase;
   text-shadow: 1px 1px 4px black;
+  background: rgba(0,0,0,0.4);
 }
 
-/* ─── ARÈNE ─────────────────────────────────────────────────────────────── */
-#arene {
+/* ─── BOÎTES D'INFO STYLE DS ────────────────────────────────────────────── */
+#infos-combat {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 30px 60px 50px 60px;
-  margin: 0 auto;
   max-width: 800px;
-  border-radius: 0;
-  border: none;
-  position: relative;
-  overflow: hidden;
-  min-height: 260px;
+  margin: 0 auto;
+  padding: 0 10px;
+  gap: 10px;
 }
 
-/* Joueur 2 en haut à gauche, plus petit */
-#zone-joueur2 {
-  text-align: center;
-  width: 220px;
-  margin-bottom: 60px;
-  position: relative;
-  z-index: 2;
+.info-joueur {
+  background: rgba(10, 10, 30, 0.92);
+  border: 3px solid #ffcb05;
+  border-radius: 10px;
+  padding: 10px 15px;
+  width: 48%;
+  box-sizing: border-box;
 }
 
-/* Joueur 1 en bas à droite, plus grand */
-#zone-joueur1 {
-  text-align: center;
-  width: 260px;
-  margin-bottom: 0px;
-  position: relative;
-  z-index: 2;
-}
-
-.zone-joueur h2 {
-  color: #ffcb05;
-  margin-bottom: 6px;
-  text-shadow: 2px 2px 6px black;
+.info-nom {
   font-size: 15px;
+  font-weight: bold;
+  color: #ffcb05;
+  text-transform: capitalize;
+  margin-bottom: 6px;
   letter-spacing: 1px;
 }
 
-/* Pokémon J2 plus petit (plus loin) */
-#zone-joueur2 img {
-  width: 90px;
-  height: 90px;
-  image-rendering: pixelated;
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
+.info-pv-barre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
-/* Pokémon J1 plus grand (plus proche) */
-#zone-joueur1 img {
-  width: 140px;
-  height: 140px;
-  image-rendering: pixelated;
-  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
+.label-pv {
+  font-size: 11px;
+  font-weight: bold;
+  color: #ffcb05;
+  font-family: "Courier New", monospace;
+  min-width: 20px;
 }
 
-/* Plateforme ovale sous les Pokémon */
-#zone-joueur2::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 20px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
-  z-index: -1;
-}
-
-#zone-joueur1::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 130px;
-  height: 25px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
-  z-index: -1;
-}
-
-/* ─── BARRES DE PV ───────────────────────────────────────────────────────── */
 .barre-pv {
-  background-color: rgba(0,0,0,0.4);
+  flex: 1;
+  background-color: rgba(0,0,0,0.5);
   border-radius: 10px;
-  height: 10px;
-  width: 100%;
-  margin: 6px 0;
+  height: 12px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .pv-fill {
@@ -209,12 +159,79 @@
   transition: width 0.5s, background-color 0.5s;
 }
 
-.zone-joueur p {
+.info-pv-texte {
   font-size: 12px;
-  color: rgba(255,255,255,0.85);
-  text-shadow: 1px 1px 3px black;
-  margin: 3px 0;
-  text-transform: capitalize;
+  color: rgba(255,255,255,0.8);
+  text-align: right;
+  font-family: "Courier New", monospace;
+}
+
+/* ─── ARÈNE ─────────────────────────────────────────────────────────────── */
+#arene {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 20px 80px 40px 80px;
+  margin: 0 auto;
+  max-width: 800px;
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+}
+
+#zone-joueur2 {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 50px;
+}
+
+#zone-joueur1 {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0;
+}
+
+/* Ombre sous Pokémon */
+#zone-joueur2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 15px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+#zone-joueur1::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  height: 20px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* Pokémon J2 plus petit */
+#img-j2 {
+  width: 95px;
+  height: 95px;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
+}
+
+/* Pokémon J1 plus grand */
+#img-j1 {
+  width: 145px;
+  height: 145px;
+  image-rendering: pixelated;
+  filter: drop-shadow(2px 4px 8px rgba(0,0,0,0.9));
 }
 
 /* ─── LOG ────────────────────────────────────────────────────────────────── */
@@ -222,11 +239,10 @@
   background-color: rgba(5, 5, 20, 0.95);
   border: 3px solid #ffcb05;
   border-bottom: none;
-  border-radius: 0;
   padding: 15px 25px;
   margin: 0 auto;
   max-width: 800px;
-  min-height: 70px;
+  min-height: 65px;
   font-size: 15px;
   font-family: "Courier New", monospace;
   color: white;
