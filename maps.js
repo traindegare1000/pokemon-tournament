@@ -91,7 +91,7 @@ const MAPS = [
   },
   {
     id: "arene-glace",
-    nom: "Arène de Palkberg",
+    nom: "Arène de Glace",
     jeu: "Diamant / Perle",
     emoji: "❄️",
     couleurFond: "#c0e8ff",
@@ -108,15 +108,7 @@ function getMapById(id) {
 function appliquerMap(map) {
   let arene = document.getElementById("arene");
 
-  // Fond principal
-  arene.style.background = map.couleurFond;
-  arene.style.borderColor = map.couleurCercles;
-
-  // Créer le sol style Pokémon DS
-  arene.style.position = "relative";
-  arene.style.overflow = "hidden";
-
-  // Supprimer ancien fond CSS
+  // Supprimer ancien style CSS
   let ancienFond = document.getElementById("fond-combat-css");
   if (ancienFond) ancienFond.remove();
 
@@ -132,37 +124,18 @@ function appliquerMap(map) {
         ${map.couleurSol} 55%,
         ${map.couleurSol} 100%
       ) !important;
+      border-color: ${map.couleurCercles} !important;
     }
 
     #arene::before {
       content: "";
       position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 50%;
-      background:
-        radial-gradient(ellipse 18px 8px at 8% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 18% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 28% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 38% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 48% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 58% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 68% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 78% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 88% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 98% 70%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 8% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 18% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 28% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 38% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 48% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 58% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 68% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 78% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 88% 90%, ${map.couleurCercles} 60%, transparent 65%),
-        radial-gradient(ellipse 18px 8px at 98% 90%, ${map.couleurCercles} 60%, transparent 65%);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: none;
+      z-index: 0;
     }
 
-    /* Plateforme joueur 2 (en haut à droite) */
     #zone-joueur2::before {
       content: "";
       position: absolute;
@@ -170,14 +143,13 @@ function appliquerMap(map) {
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
-      height: 30px;
+      height: 25px;
       background: ${map.couleurPlateforme};
       border-radius: 50%;
-      opacity: 0.6;
+      opacity: 0.5;
       z-index: 0;
     }
 
-    /* Plateforme joueur 1 (en bas à gauche) */
     #zone-joueur1::before {
       content: "";
       position: absolute;
@@ -185,10 +157,10 @@ function appliquerMap(map) {
       left: 50%;
       transform: translateX(-50%);
       width: 120px;
-      height: 30px;
+      height: 25px;
       background: ${map.couleurPlateforme};
       border-radius: 50%;
-      opacity: 0.6;
+      opacity: 0.5;
       z-index: 0;
     }
 
@@ -216,24 +188,6 @@ function afficherGrilleMaps(onChoix) {
     carte.style.borderColor = map.couleurCercles;
     carte.style.background = `linear-gradient(180deg, ${map.couleurFond} 55%, ${map.couleurSol} 100%)`;
 
-    // Mini cercles décoratifs
-    let miniCercles = document.createElement("div");
-    miniCercles.classList.add("mini-cercles");
-    miniCercles.style.cssText = `
-      position:absolute; bottom:8px; left:0; width:100%;
-      display:flex; justify-content:center; gap:5px;
-    `;
-    for (let i = 0; i < 5; i++) {
-      let c = document.createElement("div");
-      c.style.cssText = `
-        width:10px; height:5px;
-        background:${map.couleurCercles};
-        border-radius:50%;
-        opacity:0.8;
-      `;
-      miniCercles.appendChild(c);
-    }
-
     let overlay = document.createElement("div");
     overlay.classList.add("overlay-map");
 
@@ -254,7 +208,6 @@ function afficherGrilleMaps(onChoix) {
     overlay.appendChild(nom);
     overlay.appendChild(jeu);
     carte.appendChild(overlay);
-    carte.appendChild(miniCercles);
 
     carte.addEventListener("click", () => {
       document.querySelectorAll(".carte-map").forEach(c => c.classList.remove("selectionnee"));
