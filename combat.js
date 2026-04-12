@@ -32,8 +32,8 @@ function afficherEcranVote() {
     if (modeMultijoueur) {
       socket.emit("vote-map", { code: codePartie, mapId });
     } else {
-      let mapAleatoire = MAPS[Math.floor(Math.random() * MAPS.length)].id;
-      voteAdversaire = mapAleatoire;
+      // En local on prend directement la map choisie
+      voteAdversaire = mapId;
       resoudreVote();
     }
   });
@@ -107,18 +107,15 @@ if (modeMultijoueur) {
 }
 
 function afficherPokemon() {
-  // Images
   document.getElementById("img-j1").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonJ1.numero}.png`;
   document.getElementById("img-j2").src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${pokemonJ2.numero}.png`;
 
-  // Infos J1
   document.getElementById("nom-j1").textContent = pokemonJ1.nom;
   document.getElementById("texte-pv-j1").textContent = `${pokemonJ1.pvActuels} / ${pokemonJ1.pvMax}`;
   let pct1 = (pokemonJ1.pvActuels / pokemonJ1.pvMax) * 100;
   document.getElementById("pv-j1").style.width = `${pct1}%`;
   document.getElementById("pv-j1").style.backgroundColor = pct1 > 50 ? "#4CAF50" : pct1 > 20 ? "#ff9800" : "#f44336";
 
-  // Infos J2
   document.getElementById("nom-j2").textContent = pokemonJ2.nom;
   document.getElementById("texte-pv-j2").textContent = `${pokemonJ2.pvActuels} / ${pokemonJ2.pvMax}`;
   let pct2 = (pokemonJ2.pvActuels / pokemonJ2.pvMax) * 100;
@@ -275,10 +272,8 @@ function appliquerAttaque(attaque, attaquant, defenseur) {
         return;
       }
 
-      let indexSuivant = indexDefenseur;
-      let equipeSuivante = equipeDefenseur;
-      chargerPokemon(equipeSuivante[indexSuivant].numero, equipeSuivante[indexSuivant].attaques, equipeSuivante[indexSuivant]).then(p => {
-        p.objet = equipeSuivante[indexSuivant].objet || null;
+      chargerPokemon(equipeDefenseur[indexDefenseur].numero, equipeDefenseur[indexDefenseur].attaques, equipeDefenseur[indexDefenseur]).then(p => {
+        p.objet = equipeDefenseur[indexDefenseur].objet || null;
         if (tourJoueur === 1) { pokemonJ2 = p; log(`Joueur 2 envoie ${pokemonJ2.nom} !`); }
         else { pokemonJ1 = p; log(`Joueur 1 envoie ${pokemonJ1.nom} !`); }
         afficherPokemon();
