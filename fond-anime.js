@@ -33,8 +33,8 @@ const themes = {
     fondCouleur2: "#1a001a",
     particules: "ombres",
     couleurParticules: "rgba(150, 0, 200, 0.3)",
-    filtre: "hue-rotate(270deg) brightness(0.35) saturate(1.2)"
-  }
+    filtre: "brightness(0.3) saturate(1.2)"
+  },
 };
 
 const t = themes[theme];
@@ -237,7 +237,7 @@ function animerParticules() {
       if (p.y > canvas.height + 50) p.y = -50;
 
       let gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.rayon);
-      gradient.addColorStop(0, `rgba(150, 0, 200, ${p.opacite})`);
+      gradient.addColorStop(0, `rgba(80, 80, 80, ${p.opacite})`);
       gradient.addColorStop(1, "transparent");
       ctx.fillStyle = gradient;
       ctx.beginPath();
