@@ -78,18 +78,28 @@ styleAnim.textContent = `
     }
   }
 
-  #page-accueil, #page-solo, #page-multi, #section-creation,
+#page-accueil, #page-solo, #page-multi, #section-creation,
   #section-rejoindre, #section-tournoi {
     position: relative;
-    z-index: 1;
+    z-index: 2;
+    background: transparent !important;
   }
 
   #canvas-fond {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
+  }
+
+  #sprite-legendaire {
+    z-index: 1 !important;
+  }
+
+  .carte-mode {
+    background: linear-gradient(135deg, rgba(22, 33, 62, 0.85) 0%, rgba(15, 52, 96, 0.85) 100%) !important;
+    backdrop-filter: blur(5px);
   }
 `;
 document.head.appendChild(styleAnim);
