@@ -4,45 +4,55 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="accueil.css">
-    <title>Multijoueur Pokémon</title>
+    <title>Multijoueur - Pokémon Combat</title>
   </head>
   <body>
-    <h1>Tournoi Pokémon</h1>
 
-    <div id="container-accueil">
+    <!-- FOND ANIMÉ RESHIRAM -->
+    <canvas id="canvas-fond"></canvas>
+    <img id="sprite-legendaire" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/643.png" alt="">
 
-      <div class="carte-joueur">
-        <h2>🌐 Multijoueur en ligne</h2>
+    <div id="page-multi">
 
-        <div id="section-creer">
-          <h3>Créer une partie</h3>
-          <p>Choisis ton équipe et crée une salle — ton ami rejoindra avec le code.</p>
+      <div id="titre-principal">
+        <h1>🌐 Multijoueur</h1>
+        <p>Affronte un ami en ligne</p>
+      </div>
+
+      <div id="container-accueil">
+
+        <div class="carte-joueur">
+          <h2>🌐 Créer une partie</h2>
+          <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:10px 0;">Choisis ton équipe et crée une salle — ton ami rejoindra avec le code.</p>
           <button onclick="allerChoisirEquipe('creer')">⚔️ Choisir mon équipe</button>
-          <div id="zone-code" class="cache">
-            <p>Ton code de salle :</p>
-            <h2 id="code-salle" style="color:#ffcb05; font-size:40px; letter-spacing:5px;">----</h2>
-            <p style="color:gray; font-size:12px;">Donne ce code à ton ami !</p>
+          <div id="zone-code" class="cache" style="margin-top:15px;">
+            <p style="color:rgba(255,255,255,0.7);">Ton code de salle :</p>
+            <h2 id="code-salle" style="color:#ffcb05;font-size:40px;letter-spacing:5px;">----</h2>
+            <p style="color:gray;font-size:12px;">Donne ce code à ton ami !</p>
             <p id="statut-attente" style="color:gray;">En attente de l'adversaire...</p>
           </div>
         </div>
 
-        <hr style="border-color:#ffcb05; margin:20px 0;">
+        <div id="vs">VS</div>
 
-        <div id="section-rejoindre">
-          <h3>Rejoindre une partie</h3>
-          <p>Entre le code de ton ami pour rejoindre sa salle.</p>
+        <div class="carte-joueur">
+          <h2>🔗 Rejoindre une partie</h2>
+          <p style="color:rgba(255,255,255,0.7);font-size:13px;margin:10px 0;">Entre le code de ton ami pour rejoindre sa salle.</p>
           <input type="text" id="input-code" placeholder="Entre le code..." maxlength="6"
-            style="padding:10px;border-radius:5px;border:2px solid #ffcb05;background:#16213e;color:white;font-size:18px;text-align:center;width:150px;text-transform:uppercase;">
-          <br><br>
+            style="padding:10px;border-radius:10px;border:2px solid #ffcb05;background:#16213e;color:white;font-size:18px;text-align:center;width:150px;text-transform:uppercase;margin-bottom:10px;">
+          <br>
           <button onclick="allerChoisirEquipe('rejoindre')">⚔️ Choisir mon équipe</button>
         </div>
 
       </div>
+
+      <button id="btn-retour" onclick="window.location.href='accueil.html'">🔙 Retour</button>
 
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="objets.js"></script>
     <script src="multijoueur.js"></script>
+    <script src="fond-anime.js"></script>
   </body>
 </html>

@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="tournoi.css">
-    <title>Tournoi Pokémon</title>
+    <link rel="stylesheet" href="accueil.css">
+    <title>Tournoi - Pokémon Combat</title>
   </head>
   <body>
-    <h1>🏆 Tournoi Pokémon</h1>
+
+    <!-- FOND ANIMÉ GIRATINA -->
+    <canvas id="canvas-fond"></canvas>
+    <img id="sprite-legendaire" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/487.png" alt="">
 
     <div id="section-creation">
       <h2>Créer un tournoi</h2>
@@ -26,6 +30,8 @@
         <button onclick="rejoindreTournoi()">⚔️ Rejoindre</button>
       </div>
     </div>
+
+    <button id="btn-retour" onclick="window.location.href='accueil.html'" style="position:fixed;bottom:20px;left:20px;background:transparent;color:rgba(255,255,255,0.7);border:2px solid rgba(255,255,255,0.3);padding:10px 20px;border-radius:20px;cursor:pointer;font-size:14px;">🔙 Retour</button>
 
     <div id="section-tournoi" class="cache">
       <div id="info-tournoi">
@@ -47,5 +53,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="tournoi.js"></script>
+    <script src="fond-anime.js"></script>
   </body>
 </html>
