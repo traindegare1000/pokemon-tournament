@@ -5,20 +5,23 @@ function afficherApercu() {
   let conteneurJ1 = document.getElementById("equipe-j1");
   let conteneurJ2 = document.getElementById("equipe-j2");
 
-  conteneurJ1.innerHTML = "";
-  conteneurJ2.innerHTML = "";
+  if (conteneurJ1) {
+    conteneurJ1.innerHTML = "";
+    equipeJ1.forEach(pokemon => {
+      let img = document.createElement("img");
+      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.numero}.png`;
+      conteneurJ1.appendChild(img);
+    });
+  }
 
-  equipeJ1.forEach(pokemon => {
-    let img = document.createElement("img");
-    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.numero}.png`;
-    conteneurJ1.appendChild(img);
-  });
-
-  equipeJ2.forEach(pokemon => {
-    let img = document.createElement("img");
-    img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.numero}.png`;
-    conteneurJ2.appendChild(img);
-  });
+  if (conteneurJ2) {
+    conteneurJ2.innerHTML = "";
+    equipeJ2.forEach(pokemon => {
+      let img = document.createElement("img");
+      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.numero}.png`;
+      conteneurJ2.appendChild(img);
+    });
+  }
 }
 
 function choisirEquipe(joueur) {

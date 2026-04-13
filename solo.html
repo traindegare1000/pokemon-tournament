@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="accueil.css">
+    <title>Solo - Pokémon Combat</title>
+  </head>
+  <body>
+
+    <div id="page-solo">
+
+      <div id="titre-principal">
+        <h1>⚔️ Mode Solo</h1>
+        <p>2 joueurs sur le même écran</p>
+      </div>
+
+      <div id="container-accueil">
+
+        <div class="carte-joueur" id="carte-j1">
+          <h2>👤 Joueur 1</h2>
+          <div id="equipe-j1" class="apercu-equipe"></div>
+          <button onclick="choisirEquipe(1)">⚔️ Choisir mon équipe</button>
+        </div>
+
+        <div id="vs">VS</div>
+
+        <div class="carte-joueur" id="carte-j2">
+          <h2>👤 Joueur 2</h2>
+          <div id="equipe-j2" class="apercu-equipe"></div>
+          <button onclick="choisirEquipe(2)">⚔️ Choisir mon équipe</button>
+        </div>
+
+      </div>
+
+      <div id="boutons-solo">
+        <button id="btn-combat" onclick="lancerCombat()">⚔️ Lancer le combat !</button>
+        <button id="btn-retour" onclick="window.location.href='accueil.html'">🔙 Retour</button>
+      </div>
+
+    </div>
+
+    <script src="accueil.js"></script>
+  </body>
+</html>

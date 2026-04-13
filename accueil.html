@@ -4,32 +4,43 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="accueil.css">
-    <title>Tournoi Pokémon</title>
+    <title>Pokémon Combat</title>
   </head>
   <body>
-    <h1>Tournoi Pokémon</h1>
 
-    <div id="container-accueil">
+    <div id="page-accueil">
 
-      <div class="carte-joueur" id="carte-j1">
-        <h2>Joueur 1</h2>
-        <div id="equipe-j1" class="apercu-equipe"></div>
-        <button onclick="choisirEquipe(1)">⚔️ Choisir mon équipe</button>
+      <div id="titre-principal">
+        <h1>⚡ Pokémon Combat ⚡</h1>
+        <p>Choisis ton mode de jeu</p>
       </div>
 
-      <div id="vs">VS</div>
+      <div id="cartes-modes">
 
-      <div class="carte-joueur" id="carte-j2">
-        <h2>Joueur 2</h2>
-        <div id="equipe-j2" class="apercu-equipe"></div>
-        <button onclick="choisirEquipe(2)">⚔️ Choisir mon équipe</button>
+        <div class="carte-mode" onclick="window.location.href='solo.html'">
+          <div class="carte-mode-icon">⚔️</div>
+          <div class="carte-mode-titre">Solo</div>
+          <div class="carte-mode-desc">2 joueurs sur le même écran. Chacun choisit son équipe et c'est parti !</div>
+          <button class="btn-mode btn-solo">Jouer</button>
+        </div>
+
+        <div class="carte-mode" onclick="window.location.href='multijoueur.html'">
+          <div class="carte-mode-icon">🌐</div>
+          <div class="carte-mode-titre">Multijoueur</div>
+          <div class="carte-mode-desc">Affronte un ami en ligne depuis n'importe où !</div>
+          <button class="btn-mode btn-multi">Jouer</button>
+        </div>
+
+        <div class="carte-mode" onclick="window.location.href='tournoi.html'">
+          <div class="carte-mode-icon">🏆</div>
+          <div class="carte-mode-titre">Tournoi</div>
+          <div class="carte-mode-desc">Organise un tournoi avec tes amis et un bracket automatique !</div>
+          <button class="btn-mode btn-tournoi">Jouer</button>
+        </div>
+
       </div>
 
     </div>
-
-    <button id="btn-combat" onclick="lancerCombat()">⚔️ Lancer le combat !</button>
-    <button id="btn-multi" onclick="window.location.href='multijoueur.html'">🌐 Jouer en ligne</button>
-    <button id="btn-tournoi" onclick="window.location.href='tournoi.html'">🏆 Tournoi</button>
 
     <script src="accueil.js"></script>
   </body>
